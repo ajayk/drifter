@@ -36,7 +36,6 @@ func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset
 		for _, ic := range ingressList.Items {
 			installedIngress[ic.Name] = ic
 		}
-
 		for _, expectSc := range clusterConfig.Kubernetes.Ingress.IngressClasses {
 			if _, ok := installedIngress[expectSc]; ok {
 				//do something here

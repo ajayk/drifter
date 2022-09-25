@@ -37,13 +37,11 @@ var checkFile string
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
 	Use:   "check",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "checks for any configuration drifts in a cluster",
+	Long: `Running check figures out any configuration drifts in a cluster
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Pass the expectation yaml file and the kube config file to the check command 
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fflags := cmd.Flags()
 		if fflags.Changed("kubeconfig") == false { // check if the flag "git-org" is set

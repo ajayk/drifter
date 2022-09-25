@@ -30,7 +30,6 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 		if err != nil {
 			log.Fatal("Unable to int helm client ", err)
 		}
-
 		releases, err := action.NewList(actionConfig).Run()
 		if err != nil {
 			log.Fatal("Unable to list helm releases ", err)
@@ -39,7 +38,6 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 		for _, release := range releases {
 			installedHelmComponents[release.Name] = release
 		}
-
 		for _, s := range clusterConfig.Helm.Components {
 			if release, ok := installedHelmComponents[s.Name]; ok {
 				if release.Info.Status.String() == "deployed" {
