@@ -26,7 +26,7 @@ import (
 )
 
 func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
-	if len(clusterConfig.Ingress.IngressClasses) > 0 {
+	if len(clusterConfig.Kubernetes.Ingress.IngressClasses) > 0 {
 		ingressList, err := client.NetworkingV1().IngressClasses().List(ctx, v1.ListOptions{
 			TypeMeta:             v1.TypeMeta{},
 			LabelSelector:        "",
@@ -48,7 +48,7 @@ func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset
 			installedIngress[ic.Name] = ic
 		}
 
-		for _, expectSc := range clusterConfig.Ingress.IngressClasses {
+		for _, expectSc := range clusterConfig.Kubernetes.Ingress.IngressClasses {
 			if _, ok := installedIngress[expectSc]; ok {
 				//do something here
 				//fmt.Println("Found expected ", expectSc)

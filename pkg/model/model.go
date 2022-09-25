@@ -16,13 +16,17 @@ package model
 
 type Drifter struct {
 	Helm       K8sHelm    `yaml:"helm"`
-	Storage    K8sStorage `yaml:"storage"`
-	Ingress    K8sIngress `yaml:"ingress"`
 	Kubernetes Kubernetes `yaml:"kubernetes"`
 }
 
 type Kubernetes struct {
-	Namespaces []string `yaml:"namespaces"`
+	Namespaces []Namespace `yaml:"namespaces"`
+	Storage    K8sStorage  `yaml:"storage"`
+	Ingress    K8sIngress  `yaml:"ingress"`
+}
+
+type Namespace struct {
+	Name string `yaml:"name"`
 }
 
 type K8sIngress struct {

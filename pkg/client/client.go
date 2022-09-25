@@ -36,5 +36,6 @@ func GetKubernetesClient(configPath string) (*kubernetes.Clientset, error) {
 		klog.Errorf("Error creating a k8s client: %v", err)
 		return nil, err
 	}
+
 	return client, nil
 }

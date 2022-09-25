@@ -26,7 +26,7 @@ import (
 )
 
 func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
-	if len(clusterConfig.Storage.StorageClasses) > 0 {
+	if len(clusterConfig.Kubernetes.Storage.StorageClasses) > 0 {
 		scList, err := client.StorageV1().StorageClasses().List(ctx, v1.ListOptions{})
 		if err != nil {
 			log.Fatal(err)
@@ -36,7 +36,7 @@ func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clients
 			scInstalledMap[sc.Name] = sc
 		}
 
-		for _, expectSc := range clusterConfig.Storage.StorageClasses {
+		for _, expectSc := range clusterConfig.Kubernetes.Storage.StorageClasses {
 			if _, ok := scInstalledMap[expectSc]; ok {
 			} else {
 				fmt.Println("Missing ", expectSc)

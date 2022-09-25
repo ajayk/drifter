@@ -1,0 +1,27 @@
+helm:
+  components:
+    -  name: ingress-nginx
+       version: 4.2.3
+       appVersion: 1.2.0
+    -  name: cert-manager
+       version: 1.10.0
+       appVersion: v1.9.0
+    -  name: external-dns
+       version: 0.10.0
+       appVersion: 0.11.0
+    -  name: external-secrets-operator
+       version: v0.5.8
+
+kubernetes:
+  namespaces:
+    - name: kube-system
+
+  storage:
+    classes:
+      - filestore-enterprise
+      - filestore-premium-rwx
+      - filestore-standard-rwx
+
+  ingress:
+    classes:
+      - nginx

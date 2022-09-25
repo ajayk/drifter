@@ -15,10 +15,24 @@
 package cmd
 
 import (
+	"context"
+	"errors"
 	"fmt"
-
+	"github.com/ajayk/drifter/pkg/client"
+	"github.com/ajayk/drifter/pkg/helm"
+	"github.com/ajayk/drifter/pkg/kubernetes"
+	"github.com/ajayk/drifter/pkg/model"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
+	"k8s.io/klog/v2"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
 )
+
+var config string
+var checkFile string
 
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
@@ -31,7 +45,58 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("check called")
+		fflags := cmd.Flags()
+		if fflags.Changed("kubeconfig") == false { // check if the flag "git-org" is set
+			fmt.Println("no kubeconfig file specified") // If not, we'll let the user know
+			return                                      // and return
+		}
+		if fflags.Changed("check-file") == false { // check if the flag "harbor-file" is set
+			fmt.Println("check file was not specified") // If not, we'll let the user know
+			return                                      // and return
+		}
+		if checkFile == "" {
+			errors.New("check yaml not specified")
+		}
+		f, err := os.Open(checkFile)
+		if err != nil {
+			errors.New("unable to open Cluster Yaml file")
+
+		}
+		defer f.Close()
+		driftConfig := model.Drifter{}
+		if err := yaml.NewDecoder(f).Decode(&driftConfig); err != nil {
+			fmt.Println("Unable to parse yaml")
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		kubernetesClientSet, err := client.GetKubernetesClient(config)
+		if err != nil {
+			fmt.Println("Unable to obtain kubernetes client")
+		}
+
+		sigs := make(chan os.Signal, 1)
+		signal.Notify(sigs, syscall.SIGTERM, syscall.SIGINT)
+		ctx, cancel := context.WithCancel(context.Background())
+		var once sync.Once
+		defer once.Do(cancel)
+		go func() {
+			for {
+				select {
+				case sig := <-sigs:
+					klog.V(1).Infof("Received a stop signal: %v", sig)
+					once.Do(cancel)
+				case <-ctx.Done():
+					klog.V(1).Info("Cancelled context and exiting program")
+					return
+				}
+			}
+		}()
+
+		kubernetes.CheckStorageClasses(driftConfig, kubernetesClientSet, ctx)
+		kubernetes.CheckNamespaces(driftConfig, kubernetesClientSet, ctx)
+		kubernetes.CheckIngressClass(driftConfig, kubernetesClientSet, ctx)
+		helm.CheckHelmComponents(driftConfig, config)
 	},
 }
 
@@ -39,12 +104,7 @@ func init() {
 	rootCmd.AddCommand(checkCmd)
 
 	// Here you will define your flags and configuration settings.
+	checkCmd.PersistentFlags().StringVarP(&config, "kubeconfig", "k", "", "full path to kubeconfig file")
+	checkCmd.PersistentFlags().StringVarP(&checkFile, "check-file", "c", "", "path to cluster expectation yaml")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// checkCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// checkCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

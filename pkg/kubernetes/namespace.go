@@ -38,7 +38,7 @@ func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, 
 		}
 
 		for _, expectNs := range clusterConfig.Kubernetes.Namespaces {
-			if _, ok := namespacesMap[expectNs]; ok {
+			if _, ok := namespacesMap[expectNs.Name]; ok {
 				// Do Nothing
 			} else {
 				fmt.Println("Missing ", expectNs)

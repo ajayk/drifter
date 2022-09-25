@@ -23,10 +23,10 @@ import (
 	"log"
 )
 
-func CheckHelmComponents(clusterConfig model.Drifter, err error, kubeconfig string) {
+func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 	if len(clusterConfig.Helm.Components) > 0 {
 		actionConfig := new(action.Configuration)
-		err = actionConfig.Init(kube.GetConfig(kubeconfig, "", ""), "", "", log.Printf)
+		err := actionConfig.Init(kube.GetConfig(kubeconfig, "", ""), "", "", log.Printf)
 		if err != nil {
 			log.Fatal(err)
 		}
