@@ -1,4 +1,4 @@
-module drifter
+module github.com/ajayk/drifter
 
 go 1.19
 
