@@ -1,5 +1,5 @@
 <div align="center" class="no-border">
-  <img src="/img/drift.jpg" alt="Drift" />
+  <img src="/img/drift.jpg" alt="Drift" width="300" height="300"/>
   <br>
 
 <b>Find configuration drifts on Kubernetes resources or Helm charts running in your cluster.</b>
@@ -34,7 +34,7 @@ import "github.com/ajayk/drifter"
 # Usage
 
 ```bash
-drifter ./drifter check -k /Users/drifter.kube/config -c  examples/gcp-gke-check.yaml
+drifter ./drifter check -k /Users/drifter/.kube/config -c  examples/gcp-gke-check.yaml
 ```
 
 
