@@ -1,3 +1,4 @@
+// Package cmd
 // Copyright © 2022 Ajay K <ajaykemparaj@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +25,8 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "drifter",
 	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long: `Drifter checks for any drifts in the cluster 
+Can be used to check for any drifts in active clusters .`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },

@@ -58,8 +58,6 @@ func CheckHelmComponents(clusterConfig model.Drifter, err error, kubeconfig stri
 			} else {
 				fmt.Println("Missing Deployment ", s.Name)
 			}
-
 		}
-
 	}
 }
