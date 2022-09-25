@@ -17,7 +17,6 @@ package kubernetes
 
 import (
 	"context"
-	"fmt"
 	"github.com/ajayk/drifter/pkg/model"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -25,7 +24,8 @@ import (
 	"log"
 )
 
-func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
+func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Namespaces) > 0 {
 		nsList, err := client.CoreV1().Namespaces().List(ctx, v1.ListOptions{})
 		if err != nil {
@@ -40,10 +40,10 @@ func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, 
 			if _, ok := namespacesMap[expectNs.Name]; ok {
 				// Do Nothing
 			} else {
-				fmt.Printf("Missing namespace: %s\n", expectNs)
+				hasDrifts = true
+				log.Printf("Missing namespace: %s\n", expectNs)
 			}
 		}
-
 	}
-
+	return hasDrifts
 }

@@ -15,7 +15,6 @@
 package helm
 
 import (
-	"fmt"
 	"github.com/ajayk/drifter/pkg/model"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/kube"
@@ -23,7 +22,8 @@ import (
 	"log"
 )
 
-func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
+func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) bool {
+	hasDrifts := false
 	if len(clusterConfig.Helm.Components) > 0 {
 		actionConfig := new(action.Configuration)
 		err := actionConfig.Init(kube.GetConfig(kubeconfig, "", ""), "", "", log.Printf)
@@ -43,18 +43,21 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 				if release.Info.Status.String() == "deployed" {
 					if s.AppVersion != "" {
 						if release.Chart.AppVersion() != s.AppVersion {
-							fmt.Println("Need", s.AppVersion)
-							fmt.Printf("App Version mismatch for %s , %s\n", s.Name, release.Chart.AppVersion())
+							log.Println("Need", s.AppVersion)
+							log.Printf("App Version mismatch for %s , %s\n", s.Name, release.Chart.AppVersion())
+							hasDrifts = true
 						}
 					}
 				} else {
-					fmt.Println("Missing Helm Deployment ", s.Name, release.Info.Status)
+					log.Println("Missing Helm Deployment ", s.Name, release.Info.Status)
+					hasDrifts = true
 				}
 				if s.Version != "" {
 				}
 			} else {
-				fmt.Println("Missing Helm Deployment ", s.Name)
+				log.Println("Missing Helm Deployment ", s.Name)
 			}
 		}
 	}
+	return hasDrifts
 }

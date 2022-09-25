@@ -16,7 +16,6 @@ package kubernetes
 
 import (
 	"context"
-	"fmt"
 	"github.com/ajayk/drifter/pkg/model"
 	storagev1 "k8s.io/api/storage/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -25,7 +24,8 @@ import (
 	"log"
 )
 
-func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
+func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Storage.StorageClasses) > 0 {
 		scList, err := client.StorageV1().StorageClasses().List(ctx, v1.ListOptions{})
 		if err != nil {
@@ -39,9 +39,10 @@ func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clients
 		for _, expectSc := range clusterConfig.Kubernetes.Storage.StorageClasses {
 			if _, ok := scInstalledMap[expectSc]; ok {
 			} else {
-				fmt.Printf("Missing storage class: %s\n", expectSc)
+				log.Printf("Missing storage class: %s\n", expectSc)
+				hasDrifts = true
 			}
 		}
-
 	}
+	return hasDrifts
 }

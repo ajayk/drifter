@@ -18,6 +18,7 @@ installed Helm charts, then cross-checks them against
 the passed expectation file .
 
 # Installing
+
 Using Drifter is easy. First, use `go get` to install the latest version
 of the library.
 

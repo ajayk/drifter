@@ -17,7 +17,6 @@ package kubernetes
 
 import (
 	"context"
-	"fmt"
 	"github.com/ajayk/drifter/pkg/model"
 	networkingV1 "k8s.io/api/networking/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -25,8 +24,10 @@ import (
 	"log"
 )
 
-func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
+func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Ingress.IngressClasses) > 0 {
+
 		ingressList, err := client.NetworkingV1().IngressClasses().List(ctx, v1.ListOptions{})
 
 		if err != nil {
@@ -39,10 +40,12 @@ func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset
 		for _, expectSc := range clusterConfig.Kubernetes.Ingress.IngressClasses {
 			if _, ok := installedIngress[expectSc]; ok {
 				//do something here
-				//fmt.Println("Found expected ", expectSc)
+
 			} else {
-				fmt.Printf("Missing ingress class: %s\n", expectSc)
+				log.Printf("Missing ingress class: %s\n", expectSc)
+				hasDrifts = true
 			}
 		}
 	}
+	return hasDrifts
 }
