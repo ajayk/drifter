@@ -1,5 +1,5 @@
 <div align="center" class="no-border">
-  <img src="/img/drift.png" alt="Drift" />
+  <img src="/img/drift.jpg" alt="Drift" />
   <br>
 
 <b>Find configuration drifts on Kubernetes resources or Helm charts running in your cluster.</b>
