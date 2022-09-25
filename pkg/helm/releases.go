@@ -28,12 +28,12 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 		actionConfig := new(action.Configuration)
 		err := actionConfig.Init(kube.GetConfig(kubeconfig, "", ""), "", "", log.Printf)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Unable to int helm client ", err)
 		}
 
 		releases, err := action.NewList(actionConfig).Run()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Unable to list helm releases ", err)
 		}
 		installedHelmComponents := make(map[string]*release.Release)
 		for _, release := range releases {
@@ -49,14 +49,13 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) {
 							fmt.Printf("App Version mismatch for %s , %s\n", s.Name, release.Chart.AppVersion())
 						}
 					}
-
 				} else {
-					fmt.Println("Missing Deployment ", s.Name, release.Info.Status)
+					fmt.Println("Missing Helm Deployment ", s.Name, release.Info.Status)
 				}
 				if s.Version != "" {
 				}
 			} else {
-				fmt.Println("Missing Deployment ", s.Name)
+				fmt.Println("Missing Helm Deployment ", s.Name)
 			}
 		}
 	}

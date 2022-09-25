@@ -27,10 +27,9 @@ import (
 
 func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
 	if len(clusterConfig.Kubernetes.Namespaces) > 0 {
-
 		nsList, err := client.CoreV1().Namespaces().List(ctx, v1.ListOptions{})
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Unable to list namespaces", err)
 		}
 		namespacesMap := make(map[string]corev1.Namespace)
 		for _, ns := range nsList.Items {
@@ -41,7 +40,7 @@ func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, 
 			if _, ok := namespacesMap[expectNs.Name]; ok {
 				// Do Nothing
 			} else {
-				fmt.Println("Missing ", expectNs)
+				fmt.Printf("Missing namespace: %s\n", expectNs)
 			}
 		}
 

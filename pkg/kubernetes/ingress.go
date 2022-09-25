@@ -27,21 +27,10 @@ import (
 
 func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) {
 	if len(clusterConfig.Kubernetes.Ingress.IngressClasses) > 0 {
-		ingressList, err := client.NetworkingV1().IngressClasses().List(ctx, v1.ListOptions{
-			TypeMeta:             v1.TypeMeta{},
-			LabelSelector:        "",
-			FieldSelector:        "",
-			Watch:                false,
-			AllowWatchBookmarks:  false,
-			ResourceVersion:      "",
-			ResourceVersionMatch: "",
-			TimeoutSeconds:       nil,
-			Limit:                0,
-			Continue:             "",
-		})
+		ingressList, err := client.NetworkingV1().IngressClasses().List(ctx, v1.ListOptions{})
 
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Unable to get Ingress classes ", err)
 		}
 		installedIngress := make(map[string]networkingV1.IngressClass)
 		for _, ic := range ingressList.Items {
@@ -53,7 +42,7 @@ func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset
 				//do something here
 				//fmt.Println("Found expected ", expectSc)
 			} else {
-				fmt.Println("Missing ", expectSc)
+				fmt.Printf("Missing ingress class: %s\n", expectSc)
 			}
 		}
 	}

@@ -29,7 +29,7 @@ func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clients
 	if len(clusterConfig.Kubernetes.Storage.StorageClasses) > 0 {
 		scList, err := client.StorageV1().StorageClasses().List(ctx, v1.ListOptions{})
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("Unable to get storage classes ", err)
 		}
 		scInstalledMap := make(map[string]storagev1.StorageClass)
 		for _, sc := range scList.Items {
@@ -39,7 +39,7 @@ func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clients
 		for _, expectSc := range clusterConfig.Kubernetes.Storage.StorageClasses {
 			if _, ok := scInstalledMap[expectSc]; ok {
 			} else {
-				fmt.Println("Missing ", expectSc)
+				fmt.Printf("Missing storage class: %s\n", expectSc)
 			}
 		}
 
