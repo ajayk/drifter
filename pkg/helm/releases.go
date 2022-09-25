@@ -55,6 +55,7 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) bool {
 				if s.Version != "" {
 				}
 			} else {
+				hasDrifts = true
 				log.Println("Missing Helm Deployment ", s.Name)
 			}
 		}
