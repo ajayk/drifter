@@ -15,7 +15,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - "-s -w -X drifter/pkg.version.Version={{.Version}} -X drifter/pkg.version.CommitID={{.Commit}} -buildid=''"
+      - "-s -w -X github.com/ajayk/drifter/pkg/version.Version={{.Version}} -X github.com/ajayk/drifter/pkg/version.CommitID={{.Commit}} -buildid=''"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
