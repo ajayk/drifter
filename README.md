@@ -34,7 +34,7 @@ import "github.com/ajayk/drifter"
 # Usage
 
 ```bash
-drifter ./drifter check -k /Users/drifter/.kube/config -c  examples/gcp-gke-check.yaml
+drifter check -k /Users/drifter/.kube/config -c  examples/gcp-gke-check.yaml
 ```
 
 
