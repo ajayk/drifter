@@ -1,3 +1,4 @@
+// Package model
 // Copyright © 2022 Ajay K <ajaykemparaj@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,7 @@
 // limitations under the License.
 package model
 
-type KubernetesDoc struct {
+type Drifter struct {
 	Helm       K8sHelm    `yaml:"helm"`
 	Storage    K8sStorage `yaml:"storage"`
 	Ingress    K8sIngress `yaml:"ingress"`
