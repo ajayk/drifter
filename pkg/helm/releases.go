@@ -41,6 +41,15 @@ func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) bool {
 		for _, s := range clusterConfig.Helm.Components {
 			if release, ok := installedHelmComponents[s.Name]; ok {
 				if release.Info.Status.String() == "deployed" {
+					if s.Version != "" {
+						if s.Version == release.Chart.Metadata.Version {
+
+						} else {
+							log.Printf("Mismatched helm chart %s expected %s found %s  ", s.Name, s.Version, release.Chart.Metadata.Version)
+							hasDrifts = true
+						}
+					}
+
 					if s.AppVersion != "" {
 						if release.Chart.AppVersion() != s.AppVersion {
 							log.Println("Need", s.AppVersion)
