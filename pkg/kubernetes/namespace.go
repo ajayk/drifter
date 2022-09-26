@@ -24,7 +24,7 @@ import (
 	"log"
 )
 
-func CheckNamespaces(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+func CheckNamespaces(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
 	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Namespaces) > 0 {
 		nsList, err := client.CoreV1().Namespaces().List(ctx, v1.ListOptions{})
