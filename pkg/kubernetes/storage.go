@@ -24,7 +24,7 @@ import (
 	"log"
 )
 
-func CheckStorageClasses(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+func CheckStorageClasses(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
 	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Storage.StorageClasses) > 0 {
 		scList, err := client.StorageV1().StorageClasses().List(ctx, v1.ListOptions{})
