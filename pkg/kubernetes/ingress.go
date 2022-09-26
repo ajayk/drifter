@@ -24,7 +24,7 @@ import (
 	"log"
 )
 
-func CheckIngressClass(clusterConfig model.Drifter, client *kubernetes.Clientset, ctx context.Context) bool {
+func CheckIngressClass(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
 	hasDrifts := false
 	if len(clusterConfig.Kubernetes.Ingress.IngressClasses) > 0 {
 
