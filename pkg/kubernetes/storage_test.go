@@ -36,7 +36,7 @@ func TestStorage(t *testing.T) {
 				&storagev1.StorageClass{
 					TypeMeta: metav1.TypeMeta{},
 					ObjectMeta: metav1.ObjectMeta{
-						Name: "ebs-sc",
+						Name: "ebs-sc-1",
 					},
 				},
 			},
