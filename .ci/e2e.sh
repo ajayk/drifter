@@ -16,4 +16,6 @@ sleep 2
 
 echo ${PWD}
 ls -al
-drifter
+go mod download
+go build
+./drifter
