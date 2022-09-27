@@ -25,3 +25,6 @@ echo $?
 
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-fail.yaml
 echo $?
+ls -al
+rm -rf drifter
+ls -al
