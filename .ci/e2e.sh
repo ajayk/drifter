@@ -15,6 +15,4 @@ kubectl create namespace $NS
 sleep 2
 
 echo ${PWD}
-cd ..
-
-./drifter version
+ls -al
