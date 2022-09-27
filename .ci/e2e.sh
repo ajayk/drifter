@@ -18,7 +18,10 @@ echo ${PWD}
 ls -al
 go mod download
 go build
- kubectl get pods --v=6
+kubectl get pods --v=6
+./drifter version
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check.yaml
 echo $?
 
+./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-fail.yaml
+echo $?
