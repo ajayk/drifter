@@ -15,22 +15,23 @@
 package helm
 
 import (
+	"context"
 	"github.com/ajayk/drifter/pkg/model"
-	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/kube"
+	helmstoragev3 "helm.sh/helm/v3/pkg/storage"
+	"k8s.io/client-go/kubernetes"
+
 	"helm.sh/helm/v3/pkg/release"
+	driverv3 "helm.sh/helm/v3/pkg/storage/driver"
+
 	"log"
 )
 
-func CheckHelmComponents(clusterConfig model.Drifter, kubeconfig string) bool {
+func CheckHelmComponents(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
 	hasDrifts := false
 	if len(clusterConfig.Helm.Components) > 0 {
-		actionConfig := new(action.Configuration)
-		err := actionConfig.Init(kube.GetConfig(kubeconfig, "", ""), "", "", log.Printf)
-		if err != nil {
-			log.Fatal("Unable to int helm client ", err)
-		}
-		releases, err := action.NewList(actionConfig).Run()
+		hs := driverv3.NewSecrets(client.CoreV1().Secrets(""))
+		helmClient := helmstoragev3.Init(hs)
+		releases, err := helmClient.ListDeployed()
 		if err != nil {
 			log.Fatal("Unable to list helm releases ", err)
 		}

@@ -94,7 +94,7 @@ Pass the expectation yaml file and the kube config file to the check command
 		storageDrifts := kubernetes.CheckStorageClasses(driftConfig, kubernetesClientSet, ctx)
 		namesPaceDrifts := kubernetes.CheckNamespaces(driftConfig, kubernetesClientSet, ctx)
 		ingressDrifts := kubernetes.CheckIngressClass(driftConfig, kubernetesClientSet, ctx)
-		helmDrifts := helm.CheckHelmComponents(driftConfig, config)
+		helmDrifts := helm.CheckHelmComponents(driftConfig, kubernetesClientSet, ctx)
 		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts {
 			os.Exit(2)
 		}
