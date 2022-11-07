@@ -11,20 +11,16 @@ name=namespace-test
 
 # Create namespace
 kubectl create namespace $NS
-
 sleep 2
-
 echo ${PWD}
-ls -al
 go mod download
 go build
 kubectl get pods --v=6
+kubectl get ds -n kube-system
 ./drifter version
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check.yaml
 echo $?
 
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-fail.yaml
 echo $?
-ls -al
 rm -rf drifter
-ls -al
