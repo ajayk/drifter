@@ -1,0 +1,47 @@
+helm:
+  components:
+    - name: ingress-nginx
+      version: 4.2.3
+      appVersion: 1.2.0
+    - name: cert-manager
+      version: v1.8.0
+      appVersion: v1.8.0
+    - name: external-dns-cpie
+      version: 6.2.6
+      appVersion: 0.11.0
+    - name: external-secrets-operator
+      version: 0.6.8
+    - name: kyverno
+      version: 2.6.0
+      appVersion: v1.8.0
+
+kubernetes:
+  namespaces:
+    - name: kube-system
+    - name: es
+    - name: telemetry
+
+  daemonsets:
+  - namespace: kube-system
+    names:
+    - anetd
+    - nvidia-gpu-device-plugin
+  - namespace: gmp-public
+    names:
+      - node-exporters
+
+  deployments:
+    - namespace: kube-system
+      names:
+        -
+
+
+  storage:
+    classes:
+      - filestore-enterprise
+      - filestore-premium-rwx
+      - filestore-standard-rwx
+
+  ingress:
+    classes:
+      - nginx

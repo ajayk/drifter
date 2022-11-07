@@ -10,7 +10,7 @@ helm:
       version: 0.10.0
       appVersion: 0.11.0
     - name: external-secrets-operator
-      version: v0.5.8
+      version: 0.5.8
 
 kubernetes:
   namespaces:

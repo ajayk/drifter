@@ -1,3 +1,9 @@
 kubernetes:
   namespaces:
     - name: namespace-test
+
+  daemonsets:
+    - namespace: kube-system
+      names:
+        - kube-proxy
+        - kind-net

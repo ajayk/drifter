@@ -1,3 +1,8 @@
 kubernetes:
   namespaces:
     - name: namespace-test-not-existing
+
+  daemonsets:
+    - namespace: kube-system
+      names:
+        - anetd
