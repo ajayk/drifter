@@ -8,6 +8,6 @@ kubernetes:
         - anetd
 
   deployments:
-  - namespace: kube-systems
-    names:
-        not-core-dns
+    - namespace: kube-systems
+      names:
+        - not-core-dns

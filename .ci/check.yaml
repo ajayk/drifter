@@ -10,4 +10,4 @@ kubernetes:
   deployments:
     - namespace: kube-system
       names:
-        - core-dns
+        - coredns
