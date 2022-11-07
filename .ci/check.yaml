@@ -6,4 +6,4 @@ kubernetes:
     - namespace: kube-system
       names:
         - kube-proxy
-        - kindnet
+        - kind-net

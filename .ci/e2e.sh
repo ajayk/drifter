@@ -19,8 +19,16 @@ kubectl get pods --v=6
 kubectl get ds -n kube-system
 ./drifter version
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check.yaml
-echo $?
+if [ $? != 0 ]
+then
+    echo "E2E Tests Failed ... Should have returned exit code 0"
+    exit 1
+fi
 
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-fail.yaml
-echo $?
+if [ $? != 2 ]
+then
+    echo "E2E Tests Failed ... Should have returned exit code 2"
+    exit 1
+fi
 rm -rf drifter
