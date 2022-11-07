@@ -28,12 +28,12 @@ kubernetes:
     - nvidia-gpu-device-plugin
   - namespace: gmp-public
     names:
-      - node-exporters
+      - node-exporter
 
   deployments:
     - namespace: kube-system
       names:
-        -
+        - kube-dns
 
 
   storage:

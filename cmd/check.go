@@ -91,12 +91,13 @@ Pass the expectation yaml file and the kube config file to the check command
 			}
 		}()
 
+		helmDrifts := helm.CheckHelmComponents(driftConfig, kubernetesClientSet, ctx)
 		storageDrifts := kubernetes.CheckStorageClasses(driftConfig, kubernetesClientSet, ctx)
 		namesPaceDrifts := kubernetes.CheckNamespaces(driftConfig, kubernetesClientSet, ctx)
 		ingressDrifts := kubernetes.CheckIngressClass(driftConfig, kubernetesClientSet, ctx)
-		helmDrifts := helm.CheckHelmComponents(driftConfig, kubernetesClientSet, ctx)
 		daemonSetDrifts := kubernetes.CheckDaemonSets(driftConfig, kubernetesClientSet, ctx)
-		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts {
+		deploymentDrifts := kubernetes.CheckDeployments(driftConfig, kubernetesClientSet, ctx)
+		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts || deploymentDrifts {
 			os.Exit(2)
 		}
 	},

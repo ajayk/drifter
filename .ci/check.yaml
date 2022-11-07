@@ -7,3 +7,7 @@ kubernetes:
       names:
         - kube-proxy
         - kindnet
+  deployments:
+    - namespace: kube-system
+      names:
+        - core-dns
