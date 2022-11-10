@@ -35,6 +35,11 @@ kubernetes:
       names:
         - kube-dns
 
+  statefulsets:
+    - namespace: gkebackup
+      names:
+        - gkebackup-agent
+
 
   storage:
     classes:

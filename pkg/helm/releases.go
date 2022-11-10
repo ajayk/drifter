@@ -53,8 +53,7 @@ func CheckHelmComponents(clusterConfig model.Drifter, client kubernetes.Interfac
 
 					if s.AppVersion != "" {
 						if release.Chart.AppVersion() != s.AppVersion {
-							log.Println("Need", s.AppVersion)
-							log.Printf("App Version mismatch for %s , %s\n", s.Name, release.Chart.AppVersion())
+							log.Printf("App Version mismatch for %s found %s expecting version %s \n", s.Name, release.Chart.AppVersion(), s.AppVersion)
 							hasDrifts = true
 						}
 					}

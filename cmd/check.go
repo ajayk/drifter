@@ -97,7 +97,8 @@ Pass the expectation yaml file and the kube config file to the check command
 		ingressDrifts := kubernetes.CheckIngressClass(driftConfig, kubernetesClientSet, ctx)
 		daemonSetDrifts := kubernetes.CheckDaemonSets(driftConfig, kubernetesClientSet, ctx)
 		deploymentDrifts := kubernetes.CheckDeployments(driftConfig, kubernetesClientSet, ctx)
-		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts || deploymentDrifts {
+		statefulDrifts := kubernetes.CheckStatefulSets(driftConfig, kubernetesClientSet, ctx)
+		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts || deploymentDrifts || statefulDrifts {
 			os.Exit(2)
 		}
 	},

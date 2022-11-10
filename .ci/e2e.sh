@@ -18,6 +18,9 @@ go build
 kubectl get pods --v=6
 kubectl get ds -n kube-system
 kubectl get deployments -A
+kubectl get sc -A
+kubectl apply -f ${PWD}/.ci/nginx.yaml
+
 ./drifter version
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check.yaml
 

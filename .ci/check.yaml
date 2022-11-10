@@ -11,3 +11,7 @@ kubernetes:
     - namespace: kube-system
       names:
         - coredns
+  statefulsets:
+    - namespace: default
+      names:
+        - web

@@ -11,3 +11,8 @@ kubernetes:
     - namespace: kube-systems
       names:
         - not-core-dns
+
+  statefulsets:
+    - namespace: default
+      names:
+        - web-not-found

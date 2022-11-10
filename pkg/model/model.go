@@ -20,13 +20,19 @@ type Drifter struct {
 }
 
 type Kubernetes struct {
-	Namespaces  []Namespace   `yaml:"namespaces"`
-	DaemonSets  []DaemonSets  `yaml:"daemonsets"`
-	Deployments []Deployments `yaml:"deployments"`
-	Storage     K8sStorage    `yaml:"storage"`
-	Ingress     K8sIngress    `yaml:"ingress"`
+	Namespaces   []Namespace    `yaml:"namespaces"`
+	DaemonSets   []DaemonSets   `yaml:"daemonsets"`
+	Deployments  []Deployments  `yaml:"deployments"`
+	StatefulSets []StatefulSets `yaml:"statefulsets"`
+	Storage      K8sStorage     `yaml:"storage"`
+	Ingress      K8sIngress     `yaml:"ingress"`
 }
 type Deployments struct {
+	NameSpace string   `yaml:"namespace"`
+	Names     []string `yaml:"names"`
+}
+
+type StatefulSets struct {
 	NameSpace string   `yaml:"namespace"`
 	Names     []string `yaml:"names"`
 }
