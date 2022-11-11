@@ -28,6 +28,11 @@ jobs:
       - name: Test
         run: go test -v ./...
 
+      - uses: azure/setup-helm@v3
+        with:
+          version: 'v3.10.0' # default is latest (stable)
+        id: install
+
       - uses: helm/kind-action@v1.3.0
 
       - name: Testing

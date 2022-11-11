@@ -21,6 +21,9 @@ kubectl get deployments -A
 kubectl get sc -A
 kubectl apply -f ${PWD}/.ci/nginx.yaml
 
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --version 5.11.0
+
 ./drifter version
 ./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check.yaml
 
@@ -36,4 +39,14 @@ then
     echo "E2E Tests Failed ... Should have returned exit code 2"
     exit 1
 fi
+
+./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-helm-pass.yaml
+if [ $? != 0 ]
+then
+    echo "E2E Tests Failed ... Should have returned exit code 0"
+    exit 1
+fi
+
+helm delete kubernetes-dashboard
+
 rm -rf drifter
