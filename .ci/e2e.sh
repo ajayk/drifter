@@ -47,6 +47,14 @@ then
     exit 1
 fi
 
+./drifter check  -k  /home/runner/.kube/config -c  ${PWD}/.ci/check-helm-fail.yaml
+if [ $? != 2 ]
+then
+    echo "E2E Tests Failed ... Should have returned exit code 0"
+    exit 1
+fi
+
+
 helm delete kubernetes-dashboard
 
 rm -rf drifter
