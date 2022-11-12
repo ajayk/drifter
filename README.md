@@ -37,5 +37,66 @@ import "github.com/ajayk/drifter"
 ```bash
 drifter check -k /Users/drifter/.kube/config -c  examples/gcp-gke-check.yaml
 ```
+Drifter check returns either an exit code of `0` (pass)  or `2` (fail)
 
+Usage Demo
+
+[![asciicast](https://asciinema.org/a/SHFqgQMyAFifMsAMoVBm58sxD.svg)](https://asciinema.org/a/SHFqgQMyAFifMsAMoVBm58sxD)
+
+### Drifter Schema:
+Drifter yaml is easy to configure to check the expectations 
+Currently supports 7 different type of validators 
+- helm 
+- namespaces
+- deployments
+- daemonsets
+- statefulsets 
+- ingress classes
+- storage classes 
+
+
+check [examples](examples) directory for each different type of validator 
+
+```yaml
+helm:
+  components:
+    - name: ingress-nginx
+      version: 4.2.3
+      appVersion: 1.2.0
+    - name: external-secrets-operator
+      version: 0.6.8 # just chart version check not checking for appVersion here 
+
+kubernetes:
+  namespaces:
+    - name: kube-system
+    - name: es
+
+  daemonsets:
+  - namespace: kube-system
+    names:
+    - anetd
+    - nvidia-gpu-device-plugin
+  - namespace: gmp-public
+    names:
+      - node-exporter
+
+  deployments:
+    - namespace: kube-system
+      names:
+        - kube-dns
+
+  statefulsets:
+    - namespace: gkebackup
+      names:
+        - gkebackup-agent
+
+  storage:
+    classes:
+      - filestore-premium-rwx
+      - filestore-standard-rwx
+
+  ingress:
+    classes:
+      - nginx
+```
 
