@@ -47,7 +47,7 @@ Usage Demo
 ### Drifter Schema:
 
 Drifter yaml is easy to configure to check the expectations
-Currently supports 8 different type of validators
+Currently supports 9 different type of validators
 
 - helm
 - namespaces
@@ -55,6 +55,7 @@ Currently supports 8 different type of validators
 - daemonsets
 - statefulsets
 - secrets
+- configmaps
 - ingress classes
 - storage classes
 
