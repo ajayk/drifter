@@ -21,7 +21,11 @@ go build
 kubectl apply -f ${PWD}/.ci/nginx.yaml
 
 kubectl create secret generic test-secret \
-    --from-literal=username=devuser  -n kube-system
+  --from-literal=username=devuser  -n kube-system
+
+kubectl create configmap test-configmap \
+ --from-literal=username=devuser  -n kube-system
+
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --version 5.11.0
 

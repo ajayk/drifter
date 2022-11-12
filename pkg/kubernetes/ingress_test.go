@@ -45,7 +45,6 @@ func TestIngress(t *testing.T) {
 	}
 
 	drifter := model.Drifter{
-		Helm: model.K8sHelm{},
 		Kubernetes: model.Kubernetes{
 			Ingress: model.K8sIngress{IngressClasses: []string{"nginx"}},
 		},

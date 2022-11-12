@@ -10,19 +10,19 @@ import (
 	"testing"
 )
 
-func TestSecrets(t *testing.T) {
+func TestConfigMaps(t *testing.T) {
 	testCases := []struct {
 		name          string
 		namespace     []runtime.Object
 		expectSuccess bool
 	}{
 		{
-			name: "existing_secrets_should_pass",
+			name: "existing_cm_should_pass",
 			namespace: []runtime.Object{
-				&corev1.Secret{
+				&corev1.ConfigMap{
 					TypeMeta: metav1.TypeMeta{},
 					ObjectMeta: metav1.ObjectMeta{
-						Name:      "anetd-secret",
+						Name:      "anetd-cm",
 						Namespace: "kube-system",
 					},
 				},
@@ -31,9 +31,9 @@ func TestSecrets(t *testing.T) {
 		},
 
 		{
-			name: "non_existing_secrets_should_fail",
+			name: "non_existing_cm_should_fail",
 			namespace: []runtime.Object{
-				&corev1.Secret{
+				&corev1.ConfigMap{
 					TypeMeta: metav1.TypeMeta{},
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      "anetd2",
@@ -47,9 +47,9 @@ func TestSecrets(t *testing.T) {
 
 	drifter := model.Drifter{
 		Kubernetes: model.Kubernetes{
-			Secrets: []model.Secrets{{
+			ConfigMaps: []model.ConfigMaps{{
 				NameSpace: "kube-system",
-				Names:     []string{"anetd-secret"},
+				Names:     []string{"anetd-cm"},
 			}},
 		},
 	}
@@ -57,7 +57,7 @@ func TestSecrets(t *testing.T) {
 	for _, test := range testCases {
 		t.Run(test.name, func(t *testing.T) {
 			fakeClientSet := fake.NewSimpleClientset(test.namespace...)
-			va := CheckSecrets(drifter,
+			va := CheckConfigMaps(drifter,
 				fakeClientSet, context.Background())
 			if va && test.expectSuccess {
 				t.Fatalf("unexpected error getting namespace:")

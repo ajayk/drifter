@@ -44,7 +44,6 @@ func TestNamespace(t *testing.T) {
 	}
 
 	drifter := model.Drifter{
-		Helm: model.K8sHelm{},
 		Kubernetes: model.Kubernetes{
 			Namespaces: []model.Namespace{{
 				Name: "kube-test-ns",

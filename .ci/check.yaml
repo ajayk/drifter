@@ -19,3 +19,8 @@ kubernetes:
     - namespace: kube-system
       names:
         - test-secret
+
+  configmaps:
+    - namespace: kube-system
+      names:
+        - test-configmap

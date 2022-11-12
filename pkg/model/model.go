@@ -27,6 +27,12 @@ type Kubernetes struct {
 	Storage      K8sStorage     `yaml:"storage"`
 	Ingress      K8sIngress     `yaml:"ingress"`
 	Secrets      []Secrets      `yaml:"secrets"`
+	ConfigMaps   []ConfigMaps   `yaml:"configmaps"`
+}
+
+type ConfigMaps struct {
+	NameSpace string   `yaml:"namespace"`
+	Names     []string `yaml:"names"`
 }
 
 type Secrets struct {

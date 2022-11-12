@@ -50,7 +50,6 @@ func TestStatefulSets(t *testing.T) {
 	}
 
 	drifter := model.Drifter{
-		Helm: model.K8sHelm{},
 		Kubernetes: model.Kubernetes{
 			StatefulSets: []model.StatefulSets{{
 				NameSpace: "kube-system",

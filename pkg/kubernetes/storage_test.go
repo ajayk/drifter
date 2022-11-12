@@ -45,7 +45,6 @@ func TestStorage(t *testing.T) {
 	}
 
 	drifter := model.Drifter{
-		Helm: model.K8sHelm{},
 		Kubernetes: model.Kubernetes{
 			Storage: model.K8sStorage{StorageClasses: []string{"ebs-sc"}},
 		},
