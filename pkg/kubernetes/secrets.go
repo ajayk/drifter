@@ -5,20 +5,21 @@ import (
 	"github.com/ajayk/drifter/pkg/model"
 	mapset "github.com/deckarep/golang-set/v2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/client-go/kubernetes"
 	"log"
 )
 
-func CheckDaemonSets(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
+func CheckSecrets(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
 	hasDrifts := false
 	var driftCount = 0
-	if len(clusterConfig.Kubernetes.DaemonSets) > 0 {
+	if len(clusterConfig.Kubernetes.Secrets) > 0 {
 
-		for _, ds := range clusterConfig.Kubernetes.DaemonSets {
+		for _, ds := range clusterConfig.Kubernetes.Secrets {
 
-			dsList, err := client.AppsV1().DaemonSets(ds.NameSpace).List(ctx, v1.ListOptions{})
+			dsList, err := client.CoreV1().Secrets(ds.NameSpace).List(ctx, v1.ListOptions{})
 			if err != nil {
-				log.Fatal("Unable to get DaemonSets ", err)
+				log.Fatal("Unable to get Secrets ", err)
 			}
 			if len(dsList.Items) == 0 {
 				driftCount++
@@ -45,7 +46,7 @@ func CheckDaemonSets(clusterConfig model.Drifter, client kubernetes.Interface, c
 					hasDrifts = true
 					diffs := required.Difference(result)
 					for _, d := range diffs.ToSlice() {
-						log.Printf("Missing daemonset %s\n", d)
+						log.Printf("Missing secrets %s\n", d)
 					}
 				}
 			}

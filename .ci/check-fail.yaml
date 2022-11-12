@@ -16,3 +16,7 @@ kubernetes:
     - namespace: default
       names:
         - web-not-found
+  secrets:
+    - namespace: kube-system
+      names:
+        - test-secret-not-found

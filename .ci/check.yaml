@@ -15,3 +15,7 @@ kubernetes:
     - namespace: default
       names:
         - web
+  secrets:
+    - namespace: kube-system
+      names:
+        - test-secret

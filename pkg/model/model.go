@@ -26,6 +26,12 @@ type Kubernetes struct {
 	StatefulSets []StatefulSets `yaml:"statefulsets"`
 	Storage      K8sStorage     `yaml:"storage"`
 	Ingress      K8sIngress     `yaml:"ingress"`
+	Secrets      []Secrets      `yaml:"secrets"`
+}
+
+type Secrets struct {
+	NameSpace string   `yaml:"namespace"`
+	Names     []string `yaml:"names"`
 }
 type Deployments struct {
 	NameSpace string   `yaml:"namespace"`

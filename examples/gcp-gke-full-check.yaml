@@ -22,13 +22,13 @@ kubernetes:
     - name: telemetry
 
   daemonsets:
-  - namespace: kube-system
-    names:
-    - anetd
-    - nvidia-gpu-device-plugin
-  - namespace: gmp-public
-    names:
-      - node-exporter
+    - namespace: kube-system
+      names:
+        - anetd
+        - nvidia-gpu-device-plugin
+    - namespace: gmp-public
+      names:
+        - node-exporter
 
   deployments:
     - namespace: kube-system
@@ -39,7 +39,6 @@ kubernetes:
     - namespace: gkebackup
       names:
         - gkebackup-agent
-
 
   storage:
     classes:

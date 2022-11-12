@@ -15,7 +15,6 @@
 package helm
 
 import (
-	"context"
 	"github.com/ajayk/drifter/pkg/model"
 	helmstoragev3 "helm.sh/helm/v3/pkg/storage"
 	"k8s.io/client-go/kubernetes"
@@ -26,7 +25,7 @@ import (
 	"log"
 )
 
-func CheckHelmComponents(clusterConfig model.Drifter, client kubernetes.Interface, ctx context.Context) bool {
+func CheckHelmComponents(clusterConfig model.Drifter, client kubernetes.Interface) bool {
 	hasDrifts := false
 	if len(clusterConfig.Helm.Components) > 0 {
 		hs := driverv3.NewSecrets(client.CoreV1().Secrets(""))
