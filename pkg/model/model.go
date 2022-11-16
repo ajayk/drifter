@@ -20,6 +20,7 @@ type Drifter struct {
 }
 
 type Kubernetes struct {
+	Version         string            `yaml:"version"`
 	Namespaces      []Namespace       `yaml:"namespaces"`
 	DaemonSets      []DaemonSets      `yaml:"daemonsets"`
 	Deployments     []Deployments     `yaml:"deployments"`
