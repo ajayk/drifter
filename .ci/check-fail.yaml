@@ -24,3 +24,7 @@ kubernetes:
     - namespace: kube-system
       names:
         - test-configmap-not-found
+  serviceAccounts:
+    - namespace: kube-system
+      names:
+        - coredns-not-found

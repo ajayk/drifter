@@ -24,3 +24,7 @@ kubernetes:
     - namespace: kube-system
       names:
         - test-configmap
+  serviceAccounts:
+    - namespace: kube-system
+      names:
+        - coredns
