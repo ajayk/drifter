@@ -16,14 +16,17 @@ kubernetes:
     - namespace: default
       names:
         - web-not-found
+
   secrets:
     - namespace: kube-system
       names:
         - test-secret-not-found
+
   configmaps:
     - namespace: kube-system
       names:
         - test-configmap-not-found
+
   serviceAccounts:
     - namespace: kube-system
       names:

@@ -1,0 +1,5 @@
+kubernetes:
+  deployments:
+    - namespace: kube-systems
+      names:
+        - not-core-dns

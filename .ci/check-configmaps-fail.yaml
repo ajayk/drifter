@@ -1,0 +1,5 @@
+kubernetes:
+  configmaps:
+    - namespace: kube-system
+      names:
+        - test-configmap-not-found
