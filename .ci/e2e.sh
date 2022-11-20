@@ -39,13 +39,6 @@ then
     exit 1
 fi
 
-./drifter check  -k  ${kubeconfigpath} -c  ${PWD}/.ci/check-fail.yaml
-if [ $? != 2 ]
-then
-    echo "E2E Tests Failed ... Should have returned exit code 2"
-    exit 1
-fi
-
 ./drifter check  -k  ${kubeconfigpath} -c  ${PWD}/.ci/check-helm-pass.yaml
 if [ $? != 0 ]
 then
@@ -53,12 +46,14 @@ then
     exit 1
 fi
 
-./drifter check  -k  ${kubeconfigpath} -c  ${PWD}/.ci/check-helm-fail.yaml
-if [ $? != 2 ]
-then
-    echo "E2E Tests Failed ... Should have returned exit code 0"
-    exit 1
-fi
+for failureTest in ${PWD}/.ci/*-fail.yaml; do
+  ./drifter check -k ${kubeconfigpath} -c $failureTest
+  if [ $? != 2 ]
+  then
+      echo "$failureTest test Failed ... Should have returned exit code 2"
+      exit 1
+  fi
+done
 
 helm delete kubernetes-dashboard
 

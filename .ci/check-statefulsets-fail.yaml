@@ -1,0 +1,5 @@
+kubernetes:
+  statefulsets:
+    - namespace: default
+      names:
+        - web-not-found

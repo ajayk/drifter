@@ -1,0 +1,5 @@
+kubernetes:
+  daemonsets:
+    - namespace: kube-system
+      names:
+        - anetd
