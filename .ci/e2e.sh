@@ -46,11 +46,12 @@ then
     exit 1
 fi
 
-for failureTest in ${PWD}/.ci/*-fail.yaml; do
-  ./drifter check -k ${kubeconfigpath} -c $failureTest
+for failureTest in "${PWD}"/.ci/*-fail.yaml; do
+  echo "Running ${failureTest}"
+  ./drifter check -k ${kubeconfigpath} -c "${failureTest}"
   if [ $? != 2 ]
   then
-      echo "$failureTest test Failed ... Should have returned exit code 2"
+      echo "${failureTest} test Failed ... Should have returned exit code 2"
       exit 1
   fi
 done
