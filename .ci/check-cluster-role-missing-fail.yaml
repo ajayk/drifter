@@ -1,0 +1,4 @@
+kubernetes:
+  clusterRoles:
+    - names:
+        - local-path-provisioner-role-fail
