@@ -56,9 +56,10 @@ Currently supports 10 different type of validators
 - statefulsets
 - secrets
 - configmaps
-- serviceaccounts
 - ingress classes
 - storage classes
+- serviceaccounts
+- clusterroles
 
 check [examples](examples) directory for each different type of validator
 
