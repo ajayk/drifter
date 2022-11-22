@@ -29,3 +29,6 @@ kubernetes:
     - namespace: kube-system
       names:
         - coredns
+  clusterRoles:
+    - names:
+        - local-path-provisioner-role

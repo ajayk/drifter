@@ -29,14 +29,17 @@ type Kubernetes struct {
 	Ingress         K8sIngress        `yaml:"ingress"`
 	Secrets         []Secrets         `yaml:"secrets"`
 	ServiceAccounts []ServiceAccounts `yaml:"serviceAccounts"`
-
-	ConfigMaps []ConfigMaps `yaml:"configmaps"`
+	ConfigMaps      []ConfigMaps      `yaml:"configmaps"`
+	ClusterRoles    []ClusterRoles    `yaml:"clusterRoles"`
 }
 type ServiceAccounts struct {
 	NameSpace string   `yaml:"namespace"`
 	Names     []string `yaml:"names"`
 }
 
+type ClusterRoles struct {
+	Names []string `yaml:"names"`
+}
 type ConfigMaps struct {
 	NameSpace string   `yaml:"namespace"`
 	Names     []string `yaml:"names"`

@@ -102,8 +102,9 @@ Pass the expectation yaml file and the kube config file to the check command
 		configMapDrifts := kubernetes.CheckConfigMaps(driftConfig, kubernetesClientSet, ctx)
 		serviceAccountDrifts := kubernetes.CheckServiceAccounts(driftConfig, kubernetesClientSet, ctx)
 		versionDrifts := kubernetes.CheckVersion(driftConfig, kubernetesClientSet, ctx)
+		clusterRoleDrifts := kubernetes.CheckClusterRoles(driftConfig, kubernetesClientSet, ctx)
 
-		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts || deploymentDrifts || statefulDrifts || secretDrifts || configMapDrifts || serviceAccountDrifts || versionDrifts {
+		if ingressDrifts || namesPaceDrifts || storageDrifts || helmDrifts || daemonSetDrifts || deploymentDrifts || statefulDrifts || secretDrifts || configMapDrifts || serviceAccountDrifts || versionDrifts || clusterRoleDrifts {
 			os.Exit(2)
 		}
 	},
